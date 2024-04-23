@@ -1,4 +1,5 @@
 const switchs = document.getElementsByClassName('sect')
+let strike = document.getElementsByClassName('delete')  
 const all = document.querySelector('.all')
 const addlist = document.getElementsByClassName('add')
 const input = document.getElementsByClassName('hidden')
@@ -14,6 +15,7 @@ let section;
 inputItems = input.length;
 items = switchs.length;
 buttonsItems = Buttons.length;
+strikeThrough = strike.length;
 
 
 
@@ -24,6 +26,7 @@ all.addEventListener('click', function (){
     switchs[i].classList.toggle('active')
     addlist[i].classList.remove('active');
     input[i].classList.remove('active')
+    switchs[i].style.cursor = "pointer";
     }
   }
 ); 
@@ -89,7 +92,7 @@ function listHidden(addSelect){
        document.getElementsByClassName("listss")[addSelect].appendChild(licreate);
        input[addSelect].classList.remove('active')
        input[addSelect].value = '' 
-       input[addSelect].value.reset() 
+       input[addSelect].value.reset()   
       }
     }
   });
@@ -111,9 +114,8 @@ function sectOpacity(section) {
     addlist[i].classList.remove('active');  
     input[i].classList.remove('active')
     switchs[i].style.cursor = "pointer";
-    console.log('a')
   }
- 
+
 }
 
 // ($(switchs[0]).is('.active')) { alert('Its active!'); }
@@ -130,10 +132,22 @@ function sectOpacity(section) {
 
 deleteContent.addEventListener('click', function (){
   removeActiveButtons(0)
-  $('li').click(function() {
-    this.classList.toggle("delete")
-  });
+
 });
+
+
+if (deleteContent.classList.contains('active')){
+  $('li').click(function() {
+    this.classList.toggle('delete')
+  });
+}
+
+else{
+  $('li').click(function() {
+    this.classList.remove('delete')
+  });
+}
+
 
 //---------------------------------------------------------- Sort List Function
 
@@ -144,18 +158,31 @@ sort.addEventListener('click', function (){
 
 //---------------------------------------------------------- Edit Content Function
 
-editContent.addEventListener('click', function (){
-  removeActiveButtons(2)
-  $('li').click(function() {
-    this.contentEditable=true
-    $(this).on('keypress blur', function(e) {
-      if(e.keyCode&&e.keyCode==13||e.type=='blur'){
-      this.contentEditable=false
-      return false
-      }
+
+
+
+  editContent.addEventListener('click', function (){
+    removeActiveButtons(2)
+
+    if (editContent.classList.contains('active')){
+    $('li').click(function() {
+      this.contentEditable=true
+      $(this).on('keypress blur', function(e) {
+        if(e.keyCode&&e.keyCode==13||e.type=='blur'){
+        this.contentEditable=false
+        return false
+        }
+      });
     });
+  }
+
+  else{
+    $('li').click(function() {
+      this.contentEditable=false
+    });
+  }
+
   });
-});
 
 //---------------------------------------------------------- Remove Active Status Function
 
